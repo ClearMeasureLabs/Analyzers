@@ -41,7 +41,38 @@ namespace WebApplication4.Controllers
             VerifyCSharpDiagnostic(source, expected);
         }
 
-      
+        [Test]
+        public void WarnIfClassHasAttributesButNoAuthAttributeIsFound()
+        {
+            var source = @"using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Mvc;
+
+namespace WebApplication4.Controllers
+{
+    [Route(""/home"")]
+    public class HomeController : Controller
+    {
+    }
+}
+";
+            var expected = new DiagnosticResult
+            {
+                Id = "Analyzers",
+                Message = "HomeController has no authorization attribute.",
+                Severity = DiagnosticSeverity.Warning,
+                Locations =
+                    new[]
+                    {
+                        new DiagnosticResultLocation("Test0.cs", 9, 5)
+                    }
+            };
+
+            VerifyCSharpDiagnostic(source, expected);
+        }
+
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
             return new AuthorizeControllerDiagnostic();

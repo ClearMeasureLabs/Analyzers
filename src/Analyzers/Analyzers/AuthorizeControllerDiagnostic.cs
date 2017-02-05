@@ -55,13 +55,22 @@ namespace Analyzers
                     return identifierNameSyntax.Identifier.Value.ToString() == "Controller";
                 });
 
-                if (hasControllerAsBaseType && classDeclarationSyntaxNode.AttributeLists.Count == 0)
-                {
-                    var className = classDeclarationSyntaxNode.Identifier.Value.ToString();
-                    var diagnostic = Diagnostic.Create(Rule, classDeclarationSyntaxNode.GetLocation(), className);
-                    context.ReportDiagnostic(diagnostic);
-                }
+                if (!hasControllerAsBaseType) return;
 
+                var hasAuthorizedOrAllowAnonymousAttribute = classDeclarationSyntaxNode.AttributeLists.Any(als =>
+                {
+                    return als.Attributes.Any(attributeSyntax =>
+                    {
+                        var attributeName = attributeSyntax.Name.ToString();
+                        return attributeName == "AllowAnonymous" || attributeName == "Authorized";
+                    });
+                });
+
+                if (hasAuthorizedOrAllowAnonymousAttribute) return;
+
+                var className = classDeclarationSyntaxNode.Identifier.Value.ToString();
+                var diagnostic = Diagnostic.Create(Rule, classDeclarationSyntaxNode.GetLocation(), className);
+                context.ReportDiagnostic(diagnostic);
             }
         }
     }
