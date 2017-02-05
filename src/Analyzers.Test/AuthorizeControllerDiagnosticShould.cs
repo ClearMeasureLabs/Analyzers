@@ -93,6 +93,72 @@ namespace WebApplication4.Controllers
 ";
             VerifyCSharpDiagnostic(source);
         }
+
+        [Test]
+        public void NotWarnIfAllowAnonymousAttributeIsOnlyOneFound()
+        {
+            var source = @"using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace WebApplication4.Controllers
+{
+    [AllowAnonymous]
+    public class HomeController : Controller
+    {
+    }
+}
+";
+            VerifyCSharpDiagnostic(source);
+        }
+
+        [Test]
+        public void NotWarnIfAllowAnonymouseAttributeIsFoundAmongOthers()
+        {
+            var source = @"using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace WebApplication4.Controllers
+{
+    [AllowAnonymous]
+    [Route(""/home"")]
+    public class HomeController : Controller
+    {
+    }
+}
+";
+            VerifyCSharpDiagnostic(source);
+        }
+
+        [Test]
+        public void NotWarnIfAuthorizeAttributeIsFoundAmongOthers()
+        {
+            var source = @"using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace WebApplication4.Controllers
+{
+    [Authorize]
+    [Route(""/home"")]
+    public class HomeController : Controller
+    {
+    }
+}
+";
+            VerifyCSharpDiagnostic(source);
+        }
+
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
             return new AuthorizeControllerDiagnostic();
