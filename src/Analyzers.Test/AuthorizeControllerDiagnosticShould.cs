@@ -73,6 +73,26 @@ namespace WebApplication4.Controllers
             VerifyCSharpDiagnostic(source, expected);
         }
 
+        [Test]
+        public void NotWarnIfAuthorizeAttributeIsOnlyOneFound()
+        {
+            var source = @"using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
+
+namespace WebApplication4.Controllers
+{
+    [Authorize]
+    public class HomeController : Controller
+    {
+    }
+}
+";
+            VerifyCSharpDiagnostic(source);
+        }
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
         {
             return new AuthorizeControllerDiagnostic();

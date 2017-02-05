@@ -62,7 +62,7 @@ namespace Analyzers
                     return als.Attributes.Any(attributeSyntax =>
                     {
                         var attributeName = attributeSyntax.Name.ToString();
-                        return attributeName == "AllowAnonymous" || attributeName == "Authorized";
+                        return attributeName == "AllowAnonymous" || attributeName == "Authorize";
                     });
                 });
 
