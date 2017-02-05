@@ -11,18 +11,17 @@ namespace Analyzers.Test
         [Test]
         public void AddAuthorizeAttributeWhenNoOtherAttributesExist()
         {
-            var source = @"using Microsoft.AspNetCore.Mvc;
+            var source = @"using System.Web.Mvc;
 
-namespace WebApplication4.Controllers
+namespace WebApplication5.Controllers
 {
     public class HomeController : Controller
     {
     }
 }";
-            var result = @"using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+            var result = @"using System.Web.Mvc;
 
-namespace WebApplication4.Controllers
+namespace WebApplication5.Controllers
 {
     [Authorize]
     public class HomeController : Controller

@@ -13,13 +13,9 @@ namespace Analyzers.Test
         [Test]
         public void WarnIfNoAttributeIsFound()
         {
-            var source = @"using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+            var source = @"using System.Web.Mvc;
 
-namespace WebApplication4.Controllers
+namespace WebApplication5.Controllers
 {
     public class HomeController : Controller
     {
@@ -34,7 +30,7 @@ namespace WebApplication4.Controllers
                 Locations =
                     new[]
                     {
-                        new DiagnosticResultLocation("Test0.cs", 9, 5)
+                        new DiagnosticResultLocation("Test0.cs", 5, 5)
                     }
             };
 
@@ -44,13 +40,9 @@ namespace WebApplication4.Controllers
         [Test]
         public void WarnIfClassHasAttributesButNoAuthAttributeIsFound()
         {
-            var source = @"using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+            var source = @"using System.Web.Mvc;
 
-namespace WebApplication4.Controllers
+namespace WebApplication5.Controllers
 {
     [Route(""/home"")]
     public class HomeController : Controller
@@ -66,7 +58,7 @@ namespace WebApplication4.Controllers
                 Locations =
                     new[]
                     {
-                        new DiagnosticResultLocation("Test0.cs", 9, 5)
+                        new DiagnosticResultLocation("Test0.cs", 5, 5)
                     }
             };
 
@@ -76,14 +68,9 @@ namespace WebApplication4.Controllers
         [Test]
         public void NotWarnIfAuthorizeAttributeIsOnlyOneFound()
         {
-            var source = @"using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+            var source = @"using System.Web.Mvc;
 
-namespace WebApplication4.Controllers
+namespace WebApplication5.Controllers
 {
     [Authorize]
     public class HomeController : Controller
@@ -97,14 +84,9 @@ namespace WebApplication4.Controllers
         [Test]
         public void NotWarnIfAllowAnonymousAttributeIsOnlyOneFound()
         {
-            var source = @"using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+            var source = @"using System.Web.Mvc;
 
-namespace WebApplication4.Controllers
+namespace WebApplication5.Controllers
 {
     [AllowAnonymous]
     public class HomeController : Controller
@@ -118,14 +100,9 @@ namespace WebApplication4.Controllers
         [Test]
         public void NotWarnIfAllowAnonymouseAttributeIsFoundAmongOthers()
         {
-            var source = @"using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+            var source = @"using System.Web.Mvc;
 
-namespace WebApplication4.Controllers
+namespace WebApplication5.Controllers
 {
     [AllowAnonymous]
     [Route(""/home"")]
@@ -140,14 +117,9 @@ namespace WebApplication4.Controllers
         [Test]
         public void NotWarnIfAuthorizeAttributeIsFoundAmongOthers()
         {
-            var source = @"using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+            var source = @"using System.Web.Mvc;
 
-namespace WebApplication4.Controllers
+namespace WebApplication5.Controllers
 {
     [Authorize]
     [Route(""/home"")]

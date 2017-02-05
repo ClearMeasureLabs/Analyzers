@@ -57,19 +57,7 @@ namespace Analyzers
             var newRootWithAuthorizeAttribute = root.ReplaceNode(classDeclarationSyntax,
                 classDeclarationSyntax.WithAttributeLists(attributeLists));
 
-            var aspNetCoreQualifiedNames = SyntaxFactory.QualifiedName(
-                SyntaxFactory.IdentifierName("Microsoft"), SyntaxFactory.IdentifierName("AspNetCore"));
-
-            var authorizeAttributeQualifiedName = SyntaxFactory.QualifiedName(aspNetCoreQualifiedNames,
-                SyntaxFactory.IdentifierName("Authorization"));
-
-            var authorizeUsingDirective = SyntaxFactory.UsingDirective(authorizeAttributeQualifiedName);
-
-            var newRootWithUsingDirective = newRootWithAuthorizeAttribute.InsertNodesBefore(
-                newRootWithAuthorizeAttribute.ChildNodes().OfType<UsingDirectiveSyntax>().First(),
-                new[] {authorizeUsingDirective});
-
-            var formattedRoot = Formatter.Format(newRootWithUsingDirective, new AdhocWorkspace());
+            var formattedRoot = Formatter.Format(newRootWithAuthorizeAttribute, new AdhocWorkspace());
 
             var newSolution = document.WithSyntaxRoot(formattedRoot).Project.Solution;
 
