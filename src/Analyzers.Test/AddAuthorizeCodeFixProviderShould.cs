@@ -6,7 +6,7 @@ using TestHelper;
 namespace Analyzers.Test
 {
     [TestFixture]
-    public class AuthorizeAttributeCodeFixProviderShould : CodeFixVerifier
+    public class AddAuthorizeCodeFixProviderShould : CodeFixVerifier
     {
         [Test]
         public void AddAuthorizeAttributeWhenNoOtherAttributesExist()
@@ -33,7 +33,7 @@ namespace WebApplication5.Controllers
 
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
-            return new AuthorizeControllerCodeFixProvider();
+            return new AddAuthorizeCodeFixProvider();
         }
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()

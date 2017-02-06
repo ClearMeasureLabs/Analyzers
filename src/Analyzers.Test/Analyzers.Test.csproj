@@ -107,8 +107,8 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AllowAnonymousAttributeCodeFixProviderShould.cs" />
-    <Compile Include="AuthorizeAttributeCodeFixProviderShould.cs" />
+    <Compile Include="AddAllowAnonymouseCodeFixProviderShould.cs" />
+    <Compile Include="AddAuthorizeCodeFixProviderShould.cs" />
     <Compile Include="AuthorizeControllerDiagnosticShould.cs" />
     <Compile Include="Verifiers\CodeFixVerifier.cs" />
     <Compile Include="Verifiers\DiagnosticVerifier.cs" />

@@ -6,7 +6,7 @@ using TestHelper;
 namespace Analyzers.Test
 {
     [TestFixture]
-    public class AllowAnonymousAttritubteCodeFixProviderShould : CodeFixVerifier
+    public class AddAllowAnonymouseCodeFixProviderShould : CodeFixVerifier
     {
         [Test]
         public void AddAllowAnonymousAttributeWhenNoOtherAttributesExist()
@@ -33,7 +33,7 @@ namespace WebApplication5.Controllers
 
         protected override CodeFixProvider GetCSharpCodeFixProvider()
         {
-            return new AllowAnonymousCodeFixProvider();
+            return new AddAllowAnonymousCodeFixProvider();
         }
 
         protected override DiagnosticAnalyzer GetCSharpDiagnosticAnalyzer()
