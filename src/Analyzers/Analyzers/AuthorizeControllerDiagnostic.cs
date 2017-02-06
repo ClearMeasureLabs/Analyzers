@@ -69,7 +69,8 @@ namespace Analyzers
                 if (hasAuthorizedOrAllowAnonymousAttribute) return;
 
                 var className = classDeclarationSyntaxNode.Identifier.Value.ToString();
-                var diagnostic = Diagnostic.Create(Rule, classDeclarationSyntaxNode.GetLocation(), className);
+                var diagnosticLocation = classDeclarationSyntaxNode.Identifier.GetLocation();
+                var diagnostic = Diagnostic.Create(Rule, diagnosticLocation, className);
                 context.ReportDiagnostic(diagnostic);
             }
         }

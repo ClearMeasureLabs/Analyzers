@@ -30,7 +30,7 @@ namespace WebApplication5.Controllers
                 Locations =
                     new[]
                     {
-                        new DiagnosticResultLocation("Test0.cs", 5, 5)
+                        new DiagnosticResultLocation("Test0.cs", 5, 18)
                     }
             };
 
@@ -58,7 +58,7 @@ namespace WebApplication5.Controllers
                 Locations =
                     new[]
                     {
-                        new DiagnosticResultLocation("Test0.cs", 5, 5)
+                        new DiagnosticResultLocation("Test0.cs", 6, 18)
                     }
             };
 
