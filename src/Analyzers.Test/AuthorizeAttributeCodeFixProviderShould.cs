@@ -6,7 +6,7 @@ using TestHelper;
 namespace Analyzers.Test
 {
     [TestFixture]
-    public class AuthorizeAttritubteCodeFixProviderShould : CodeFixVerifier
+    public class AuthorizeAttributeCodeFixProviderShould : CodeFixVerifier
     {
         [Test]
         public void AddAuthorizeAttributeWhenNoOtherAttributesExist()

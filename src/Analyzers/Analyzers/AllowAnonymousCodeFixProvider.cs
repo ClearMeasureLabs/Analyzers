@@ -12,10 +12,10 @@ using Microsoft.CodeAnalysis.Formatting;
 
 namespace Analyzers
 {
-    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(AuthorizeControllerCodeFixProvider)), Shared]
-    public class AuthorizeControllerCodeFixProvider : CodeFixProvider
+    [ExportCodeFixProvider(LanguageNames.CSharp, Name = nameof(AllowAnonymousCodeFixProvider)), Shared]
+    public class AllowAnonymousCodeFixProvider : CodeFixProvider
     {
-        private const string title = "Add Authorize Attribute";
+        private const string title = "Add AllowAnonymous Attribute";
 
         public sealed override ImmutableArray<string> FixableDiagnosticIds
         {
@@ -40,16 +40,16 @@ namespace Analyzers
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: title,
-                    createChangedSolution: c => AddAuthorizeAttribute(context.Document, classDeclarationSyntax, root, c),
+                    createChangedSolution: c => AddAllowAnonymousAttribute(context.Document, classDeclarationSyntax, root, c),
                     equivalenceKey: title),
                 diagnostic);
         }
 
-        private Task<Solution> AddAuthorizeAttribute(Document document,
+        private Task<Solution> AddAllowAnonymousAttribute(Document document,
             ClassDeclarationSyntax classDeclarationSyntax, SyntaxNode root,
             CancellationToken cancellationToken)
         {
-            var attributeSyntax = SyntaxFactory.Attribute(SyntaxFactory.IdentifierName("Authorize"));
+            var attributeSyntax = SyntaxFactory.Attribute(SyntaxFactory.IdentifierName("AllowAnonymous"));
             var attributeListSyntax = SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(attributeSyntax));
             var attributeLists = classDeclarationSyntax.AttributeLists.Add(attributeListSyntax.NormalizeWhitespace());
 
