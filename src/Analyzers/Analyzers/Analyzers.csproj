@@ -49,7 +49,9 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Analyzers.nuspec" />
+    <None Include="Analyzers.nuspec">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="app.config" />
     <None Include="packages.config" />
     <None Include="tools\install.ps1">

@@ -10,7 +10,31 @@ namespace Analyzers.Test
     [TestFixture]
     public class AuthorizeControllerDiagnosticShould : CodeFixVerifier
     {
+
         [Test]
+        public void RunFineOnNonController()
+        {
+            var source = @"public class DbContextProvider
+        {
+            private SqlConnection _connection;
+
+            public string ScopeName { get; set; }
+            public UserFilterContext UserFilterContext { get; set; }
+            public readonly int LenderId = 100;
+
+            public DbContextProvider(string scopeName = null, SqlConnection connection = null, UserFilterContext userFilterContext = null)
+            {
+                UserFilterContext = userFilterContext ?? new UserFilterContext { LenderId = LenderId };
+                ScopeName = scopeName ?? Guid.NewGuid().ToString();
+                _connection = connection;
+            }
+}
+";
+            VerifyCSharpDiagnostic(source);
+        }
+        
+
+            [Test]
         public void WarnIfNoAttributeIsFound()
         {
             var source = @"using System.Web.Mvc;

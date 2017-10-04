@@ -2,16 +2,15 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>Analyzers</id>
-    <version>1.0.0.0</version>
-    <title>Analyzers</title>
-    <authors>Justin Self</authors>
-    <owners>Justin Self</owners>
-    <licenseUrl>http://LICENSE_URL_HERE_OR_DELETE_THIS_LINE</licenseUrl>
-    <projectUrl>http://PROJECT_URL_HERE_OR_DELETE_THIS_LINE</projectUrl>
-    <iconUrl>http://ICON_URL_HERE_OR_DELETE_THIS_LINE</iconUrl>
+    <version>0.3.0.0</version>
+    <title>MVC Analyzers</title>
+    <authors>Justin Self,Simon Timms</authors>
+    <owners>Justin Self,Simon Timms</owners>
+    <licenseUrl>https://github.com/ClearMeasureLabs/Analyzers/blob/master/LICENSE</licenseUrl>
+    <projectUrl>https://github.com/ClearMeasureLabs/Analyzers</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
-    <description>Analyzers</description>
-    <releaseNotes>Summary of changes made in this release of the package.</releaseNotes>
+    <description>A colleciton of analysers for use in ASP.NET MVC</description>
+    <releaseNotes>Initial release.</releaseNotes>
     <copyright>Copyright</copyright>
     <tags>Analyzers, analyzers</tags>
     <frameworkAssemblies>
