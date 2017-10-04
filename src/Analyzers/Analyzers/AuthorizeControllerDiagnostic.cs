@@ -1,13 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Collections.Immutable;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading;
-using Microsoft.CodeAnalysis;
+﻿using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 using Microsoft.CodeAnalysis.Diagnostics;
+using System;
+using System.Collections.Immutable;
+using System.Linq;
 
 namespace Analyzers
 {
@@ -18,11 +15,11 @@ namespace Analyzers
 
         // You can change these strings in the Resources.resx file. If you do not want your analyzer to be localize-able, you can use regular strings for Title and MessageFormat.
         // See https://github.com/dotnet/roslyn/blob/master/docs/analyzers/Localizing%20Analyzers.md for more on localization
-        private static readonly LocalizableString Title = "Controller found with no explicit authorization attribute.";
+        private static readonly LocalizableString Title = "Controller method found with no explicit authorization attribute.";
         private static readonly LocalizableString MessageFormat = "{0} has no authorization attribute.";
 
         private static readonly LocalizableString Description =
-            "All controllers should have either AllowAnonymous or AuthorizeRight attributes.";
+            "All public controllers methods should have either AllowAnonymous or AuthorizeRight attributes.";
 
         private const string Category = "Controllers";
 
@@ -45,7 +42,8 @@ namespace Analyzers
 
             if (methodDeclarationSyntax != null )
             {
-                var classDeclarationSyntax = methodDeclarationSyntax.SyntaxTree.GetRoot().DescendantNodes().OfType<ClassDeclarationSyntax>().Last();
+                var classDeclarationSyntax = methodDeclarationSyntax.SyntaxTree.GetRoot().DescendantNodes().OfType<ClassDeclarationSyntax>().LastOrDefault();
+                if (classDeclarationSyntax == null || classDeclarationSyntax.BaseList == null || classDeclarationSyntax.BaseList.Types == null) return;
                 var hasControllerAsBaseType = classDeclarationSyntax.BaseList.Types.Any(bst =>
                 {
                     var simpleBaseTypeSyntax = bst as SimpleBaseTypeSyntax;

@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>Sync1MVCAnalyser</id>
-    <version>0.2.0.0</version>
+    <version>0.3.0.0</version>
     <title>Sync1 MVC Analyzers</title>
     <authors>Justin Self,Simon Timms</authors>
     <owners>Justin Self,Simon Timms</owners>
