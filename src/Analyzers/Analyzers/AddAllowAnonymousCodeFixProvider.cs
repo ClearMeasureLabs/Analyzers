@@ -34,27 +34,27 @@ namespace Analyzers
             var diagnosticSpan = diagnostic.Location.SourceSpan;
 
             var root = await context.Document.GetSyntaxRootAsync(context.CancellationToken).ConfigureAwait(false);
-            var classDeclarationSyntax =
-                root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<ClassDeclarationSyntax>().First();
+            var methodDeclarationSyntax =
+                root.FindToken(diagnosticSpan.Start).Parent.AncestorsAndSelf().OfType<MethodDeclarationSyntax>().First();
 
             context.RegisterCodeFix(
                 CodeAction.Create(
                     title: title,
-                    createChangedSolution: c => AddAllowAnonymousAttribute(context.Document, classDeclarationSyntax, root, c),
+                    createChangedSolution: c => AddAllowAnonymousAttribute(context.Document, methodDeclarationSyntax, root, c),
                     equivalenceKey: title),
                 diagnostic);
         }
 
         private Task<Solution> AddAllowAnonymousAttribute(Document document,
-            ClassDeclarationSyntax classDeclarationSyntax, SyntaxNode root,
+            MethodDeclarationSyntax methodDeclarationSyntax, SyntaxNode root,
             CancellationToken cancellationToken)
         {
             var attributeSyntax = SyntaxFactory.Attribute(SyntaxFactory.IdentifierName("AllowAnonymous"));
             var attributeListSyntax = SyntaxFactory.AttributeList(SyntaxFactory.SingletonSeparatedList(attributeSyntax));
-            var attributeLists = classDeclarationSyntax.AttributeLists.Add(attributeListSyntax.NormalizeWhitespace());
+            var attributeLists = methodDeclarationSyntax.AttributeLists.Add(attributeListSyntax.NormalizeWhitespace());
 
-            var newRootWithAuthorizeAttribute = root.ReplaceNode(classDeclarationSyntax,
-                classDeclarationSyntax.WithAttributeLists(attributeLists));
+            var newRootWithAuthorizeAttribute = root.ReplaceNode(methodDeclarationSyntax,
+                methodDeclarationSyntax.WithAttributeLists(attributeLists));
 
             var formattedRoot = Formatter.Format(newRootWithAuthorizeAttribute, new AdhocWorkspace());
 

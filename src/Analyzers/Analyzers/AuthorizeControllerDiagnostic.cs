@@ -22,7 +22,7 @@ namespace Analyzers
         private static readonly LocalizableString MessageFormat = "{0} has no authorization attribute.";
 
         private static readonly LocalizableString Description =
-            "All controllers should have either AllowAnonymous or Authorized attributes.";
+            "All controllers should have either AllowAnonymous or AuthorizeRight attributes.";
 
         private const string Category = "Controllers";
 
@@ -36,16 +36,17 @@ namespace Analyzers
 
         public override void Initialize(AnalysisContext context)
         {
-            context.RegisterSyntaxNodeAction(AnalyzeNode, SyntaxKind.ClassDeclaration);
+            context.RegisterSyntaxNodeAction(AnalyzeNode, SyntaxKind.MethodDeclaration);
         }
 
         private void AnalyzeNode(SyntaxNodeAnalysisContext context)
         {
-            var classDeclarationSyntaxNode = context.Node as ClassDeclarationSyntax;
+            var methodDeclarationSyntax = context.Node as MethodDeclarationSyntax;
 
-            if (classDeclarationSyntaxNode != null && classDeclarationSyntaxNode.BaseList != null)
+            if (methodDeclarationSyntax != null )
             {
-                var hasControllerAsBaseType = classDeclarationSyntaxNode.BaseList.Types.Any(bst =>
+                var classDeclarationSyntax = methodDeclarationSyntax.SyntaxTree.GetRoot().DescendantNodes().OfType<ClassDeclarationSyntax>().Last();
+                var hasControllerAsBaseType = classDeclarationSyntax.BaseList.Types.Any(bst =>
                 {
                     var simpleBaseTypeSyntax = bst as SimpleBaseTypeSyntax;
 
@@ -57,20 +58,24 @@ namespace Analyzers
 
                 if (!hasControllerAsBaseType) return;
 
-                var hasAuthorizedOrAllowAnonymousAttribute = classDeclarationSyntaxNode.AttributeLists.Any(als =>
+                //only test public methods
+                if (!methodDeclarationSyntax.Modifiers.Any(SyntaxKind.PublicKeyword)) return;
+
+                var hasAuthorizedOrAllowAnonymousAttribute = methodDeclarationSyntax.AttributeLists.Any(als =>
                 {
                     return als.Attributes.Any(attributeSyntax =>
                     {
                         var attributeName = attributeSyntax.Name.ToString();
-                        return attributeName == "AllowAnonymous" || attributeName == "Authorize";
+                        return attributeName == "AllowAnonymous" || attributeName == "AuthorizeRight";
                     });
                 });
 
                 if (hasAuthorizedOrAllowAnonymousAttribute) return;
 
-                var className = classDeclarationSyntaxNode.Identifier.Value.ToString();
-                var diagnosticLocation = classDeclarationSyntaxNode.Identifier.GetLocation();
-                var diagnostic = Diagnostic.Create(Rule, diagnosticLocation, className);
+                var className = classDeclarationSyntax.Identifier.Value.ToString();
+                var methodName = methodDeclarationSyntax.Identifier.Value.ToString();
+                var diagnosticLocation = methodDeclarationSyntax.Identifier.GetLocation();
+                var diagnostic = Diagnostic.Create(Rule, diagnosticLocation, $"{className}.{methodName}");
                 context.ReportDiagnostic(diagnostic);
             }
         }

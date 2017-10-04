@@ -43,18 +43,21 @@ namespace WebApplication5.Controllers
 {
     public class HomeController : Controller
     {
+        public string Blah(){
+
+        }
     }
 }
 ";
             var expected = new DiagnosticResult
             {
                 Id = "Analyzers",
-                Message = "HomeController has no authorization attribute.",
+                Message = "HomeController.Blah has no authorization attribute.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
                     new[]
                     {
-                        new DiagnosticResultLocation("Test0.cs", 5, 18)
+                        new DiagnosticResultLocation("Test0.cs", 7, 23)
                     }
             };
 
@@ -62,27 +65,49 @@ namespace WebApplication5.Controllers
         }
 
         [Test]
-        public void WarnIfClassHasAttributesButNoAuthAttributeIsFound()
+        public void NotWarnIfNoAttributeIsFoundAndMethodPrivate()
         {
             var source = @"using System.Web.Mvc;
 
 namespace WebApplication5.Controllers
 {
-    [Route(""/home"")]
     public class HomeController : Controller
     {
+        private string Blah(){
+
+        }
+    }
+}
+";
+
+            VerifyCSharpDiagnostic(source);
+        }
+
+        [Test]
+        public void WarnIfMethodHasAttributesButNoAuthAttributeIsFound()
+        {
+            var source = @"using System.Web.Mvc;
+
+namespace WebApplication5.Controllers
+{
+    public class HomeController : Controller
+    {
+        [Route(""/home"")]
+        public string Blah(){
+
+        }
     }
 }
 ";
             var expected = new DiagnosticResult
             {
                 Id = "Analyzers",
-                Message = "HomeController has no authorization attribute.",
+                Message = "HomeController.Blah has no authorization attribute.",
                 Severity = DiagnosticSeverity.Warning,
                 Locations =
                     new[]
                     {
-                        new DiagnosticResultLocation("Test0.cs", 6, 18)
+                        new DiagnosticResultLocation("Test0.cs", 8, 23)
                     }
             };
 
@@ -96,9 +121,12 @@ namespace WebApplication5.Controllers
 
 namespace WebApplication5.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
+        [AuthorizeRight]
+        public string Blah(){
+
+        }
     }
 }
 ";
@@ -112,9 +140,12 @@ namespace WebApplication5.Controllers
 
 namespace WebApplication5.Controllers
 {
-    [AllowAnonymous]
     public class HomeController : Controller
     {
+        [AllowAnonymous]
+        public string Blah(){
+
+        }
     }
 }
 ";
@@ -128,10 +159,13 @@ namespace WebApplication5.Controllers
 
 namespace WebApplication5.Controllers
 {
-    [AllowAnonymous]
-    [Route(""/home"")]
     public class HomeController : Controller
     {
+        [AllowAnonymous]
+        [Route(""/home"")]
+        public string Blah(){
+
+        }
     }
 }
 ";
@@ -145,10 +179,13 @@ namespace WebApplication5.Controllers
 
 namespace WebApplication5.Controllers
 {
-    [Authorize]
-    [Route(""/home"")]
     public class HomeController : Controller
     {
+        [Route(""/home"")]
+        [AuthorizeRight]
+        public string Blah(){
+
+        }
     }
 }
 ";

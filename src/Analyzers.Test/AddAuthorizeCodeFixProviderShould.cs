@@ -17,15 +17,23 @@ namespace WebApplication5.Controllers
 {
     public class HomeController : Controller
     {
+        public string Blah()
+        {
+
+        }
     }
 }";
             var result = @"using System.Web.Mvc;
 
 namespace WebApplication5.Controllers
 {
-    [Authorize]
     public class HomeController : Controller
     {
+        [AuthorizeRight]
+        public string Blah()
+        {
+
+        }
     }
 }";
             VerifyCSharpFix(source, result, null, true);

@@ -1,9 +1,9 @@
 ﻿<?xml version="1.0"?>
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
-    <id>Analyzers</id>
-    <version>0.3.0.0</version>
-    <title>MVC Analyzers</title>
+    <id>Sync1MVCAnalyser</id>
+    <version>0.2.0.0</version>
+    <title>Sync1 MVC Analyzers</title>
     <authors>Justin Self,Simon Timms</authors>
     <owners>Justin Self,Simon Timms</owners>
     <licenseUrl>https://github.com/ClearMeasureLabs/Analyzers/blob/master/LICENSE</licenseUrl>
