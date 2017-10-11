@@ -2,7 +2,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd">
   <metadata>
     <id>Sync1MVCAnalyser</id>
-    <version>0.3.0.0</version>
+    <version>0.4.0.0</version>
     <title>Sync1 MVC Analyzers</title>
     <authors>Justin Self,Simon Timms</authors>
     <owners>Justin Self,Simon Timms</owners>
@@ -10,7 +10,7 @@
     <projectUrl>https://github.com/ClearMeasureLabs/Analyzers</projectUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <description>A colleciton of analysers for use in ASP.NET MVC</description>
-    <releaseNotes>Initial release.</releaseNotes>
+    <releaseNotes>Adding async void analyser</releaseNotes>
     <copyright>Copyright</copyright>
     <tags>Analyzers, analyzers</tags>
     <frameworkAssemblies>
